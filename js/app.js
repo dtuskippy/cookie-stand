@@ -1,6 +1,7 @@
 'use strict';
 
 let salesSection = document.getElementById('store-sales-data');
+let salesTable = document.querySelector('table');
 
 //table basics
 
@@ -45,27 +46,7 @@ Store.prototype.customerCalc = function(){
   return Math.floor(Math.random() * (this.maxCust - this.minCust + 1) + this.minCust);
 }
 
-// Store.prototype.salesCount = function(){
-//   let arr = [];
-//   let total = 0;  
-//     for(let i = this.openingHour; i <= this.closingHour; i++) {
-//         let obj = {};
-//         let salesCalc = Math.floor(this.customerCalc() * this.aveCookieSale);
-//         total += salesCalc;
-//           if(i < 12) {
-//             obj[i + "am"] = salesCalc;
-//           } else if(i === 12){
-//             obj[i + "pm"] = salesCalc;
-//           } else if (i > 12 && i <= this.closingHour){
-//             obj[i - 12 + "pm"] = salesCalc;
-//           } else if (i === this.closingHour) {
-//             obj['Total'] = total;
-//             }
-//             arr.push(obj);
-//     }
-    
-//     return arr;
-// }
+
 
 Store.prototype.salesCount = function(){
   let arr = [];
@@ -89,26 +70,64 @@ Store.prototype.salesCount = function(){
     return arr;
 }
 
-Store.prototype.render = function(){
-  let articleElem = document.createElement('article');
-    salesSection.appendChild(articleElem);
-        
-    let h2Elem = document.createElement('h2');
-    h2Elem.textContent = this.location;
-    articleElem.appendChild(h2Elem);
+function renderHeader(){
+  let tHeadElem = document.createElement('thead');
+  salesTable.appendChild(tHeadElem);
+  
+  let tHRowElem = document.createElement('tr');
+  tHeadElem.appendChild(tHRowElem);
 
-    let ulElem = document.createElement('ul');
-    articleElem.appendChild(ulElem);
+  let tHElem = document.createElement('th');
+  tHElem.textContent = "Shop Location";
+  tHRowElem.appendChild(tHElem);
+ 
+  let openingHour = 6;
+  let closingHour = 19;
 
-    for(let i = 0; i < this.salesData.length; i++){
-      let innerObj = this.salesData[i];
-      for(let key in innerObj) {
-        let liElem = document.createElement('li');
-        liElem.textContent = `${key}: ${innerObj[key]}`;
-        ulElem.appendChild(liElem);
-      }
+  for(let i = openingHour; i <= closingHour; i++){
+      let tHElem = document.createElement('th');
+      if(i < 12) {
+        tHElem.textContent = `${i}:00am`;;
+      } else if(i === 12){
+        tHElem.textContent = `${i}:00pm`;
+      }else  {
+        tHElem.textContent = `${i-12}:00pm`;
+      } 
+      
+      tHRowElem.appendChild(tHElem);
     }
+    let tHElemX = document.createElement('th');
+    tHElemX.textContent = "Daily Location Total";
+    tHRowElem.appendChild(tHElemX);
+    
 }
+
+
+Store.prototype.render = function(){
+    
+  let tBodyElem = document.createElement('tbody');
+  salesTable.appendChild(tBodyElem);
+
+  let tRowElem = document.createElement('tr');
+  tBodyElem.appendChild(tRowElem);
+  
+  let tHElem = document.createElement('th');
+  tHElem.textContent = `${this.location}`;
+  tRowElem.appendChild(tHElem);
+ 
+  for(let i = 0; i < this.salesData.length; i++){
+    let innerObj = this.salesData[i];
+    for(let key in innerObj) {
+      let tDElem = document.createElement('td');
+      tDElem.textContent = `${innerObj[key]}`;
+      tRowElem.appendChild(tDElem);
+     }
+  }
+}
+
+  
+
+
 
 
 let seattle = new Store('Seattle', 23, 65, 6.3);
@@ -131,6 +150,9 @@ paris.render();
 let lima = new Store('Lima', 2, 16, 4.6);
 lima.salesData = lima.salesCount();
 lima.render();
+
+renderHeader();
+
 
 
 
