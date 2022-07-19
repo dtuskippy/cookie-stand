@@ -2,6 +2,32 @@
 
 let salesSection = document.getElementById('store-sales-data');
 
+//table basics
+
+
+// <table>
+//   <thead>
+//     <tr>
+//       <th></th> //this is the hours
+//       <th></th>
+//       <th></th>
+//     </tr>
+//   </thead>
+//   <tbody>
+//     <tr>  //this where each store has a row
+//       <td></td> //this the salesCount per hour
+//       <td></td>
+//       <td></td>
+//     </tr>
+//     <tr>
+//       <td></td>
+//       <td></td>
+//       <td></td>
+//     </tr>
+//   </tbody>
+// </table>
+
+
 //constructor below
 
 function Store(location, minCust, maxCust, aveCookieSale){
@@ -19,11 +45,35 @@ Store.prototype.customerCalc = function(){
   return Math.floor(Math.random() * (this.maxCust - this.minCust + 1) + this.minCust);
 }
 
+// Store.prototype.salesCount = function(){
+//   let arr = [];
+//   let total = 0;  
+//     for(let i = this.openingHour; i <= this.closingHour; i++) {
+//         let obj = {};
+//         let salesCalc = Math.floor(this.customerCalc() * this.aveCookieSale);
+//         total += salesCalc;
+//           if(i < 12) {
+//             obj[i + "am"] = salesCalc;
+//           } else if(i === 12){
+//             obj[i + "pm"] = salesCalc;
+//           } else if (i > 12 && i <= this.closingHour){
+//             obj[i - 12 + "pm"] = salesCalc;
+//           } else if (i === this.closingHour) {
+//             obj['Total'] = total;
+//             }
+//             arr.push(obj);
+//     }
+    
+//     return arr;
+// }
+
 Store.prototype.salesCount = function(){
-  let arr = [];  
+  let arr = [];
+  let total = 0;  
     for(let i = this.openingHour; i <= this.closingHour; i++) {
         let obj = {};
         let salesCalc = Math.floor(this.customerCalc() * this.aveCookieSale);
+        total += salesCalc;
           if(i < 12) {
             obj[i + "am"] = salesCalc;
           } else if(i === 12){
@@ -33,6 +83,9 @@ Store.prototype.salesCount = function(){
           }
             arr.push(obj);
     }
+    let totObj = {};
+    totObj['Total'] = total;
+    arr.push(totObj);
     return arr;
 }
 
