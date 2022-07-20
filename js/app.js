@@ -76,7 +76,66 @@ function renderHeader(){
     
 }
 
+// function renderFooter(){
+//   let tFootElem = document.createElement('tfoot');
+//   salesTable.appendChild(tFootElem);
+  
+//   let tFRowElem = document.createElement('tr');
+//   tFootElem.appendChild(tFRowElem);
 
+//   let tFElem = document.createElement('td');
+//   tFElem.textContent = "Totals";
+//   tFRowElem.appendChild(tFElem);
+//  /////above this probably makes sense
+//   let 
+//   for(let i = openingHour; i <= closingHour; i++){
+//       let tHElem = document.createElement('th');
+//       if(i < 12) {
+//         tHElem.textContent = `${i}:00am`;;
+//       } else if(i === 12){
+//         tHElem.textContent = `${i}:00pm`;
+//       }else  {
+//         tHElem.textContent = `${i-12}:00pm`;
+//       } 
+      
+//       tHRowElem.appendChild(tHElem);
+//     }
+//     let tHElemX = document.createElement('th');
+//     tHElemX.textContent = "Daily Location Total";
+//     tHRowElem.appendChild(tHElemX);
+    
+// }
+
+
+////////////array model below from lecture 07
+
+// THIS - refer to the whole object that gets created
+let students = [];
+
+function Student(fullName, pronouns){
+  this.fullName = fullName;
+  this.pronouns = pronouns;
+  this.course = '201d88';
+  this.interests = [];
+  students.push(this);
+}
+
+// PROTOTYPES - inherits
+Student.prototype.greeting = function(){
+  console.log(`Hey ${this.course}, this is ${this.fullName}!!`);
+}
+
+
+new Student('Liliane Lendvai', 'she/her');
+new Student('Dan Awesome', 'he/him');
+new Student('Tim Traylor', 'he/him');
+
+students[0].interests.push('reading');
+
+
+console.log(students)
+
+/////////////////
 Store.prototype.render = function(){
     
   let tBodyElem = document.createElement('tbody');
