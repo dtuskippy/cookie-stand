@@ -120,20 +120,20 @@ function Student(fullName, pronouns){
   students.push(this);
 }
 
-// PROTOTYPES - inherits
-Student.prototype.greeting = function(){
-  console.log(`Hey ${this.course}, this is ${this.fullName}!!`);
-}
+// // PROTOTYPES - inherits
+// Student.prototype.greeting = function(){
+//   console.log(`Hey ${this.course}, this is ${this.fullName}!!`);
+// }
 
 
-new Student('Liliane Lendvai', 'she/her');
-new Student('Dan Awesome', 'he/him');
-new Student('Tim Traylor', 'he/him');
+// new Student('Liliane Lendvai', 'she/her');
+// new Student('Dan Awesome', 'he/him');
+// new Student('Tim Traylor', 'he/him');
 
-students[0].interests.push('reading');
+// students[0].interests.push('reading');
 
 
-console.log(students)
+// console.log(students)
 
 /////////////////
 Store.prototype.render = function(){
