@@ -38,10 +38,10 @@ main nav a {
 
 
 
-  main {
-  width: 1200px;
-  margin: auto;
- 
+main {
+ width: 1200px;
+ margin: auto;
+
 }
 
 h2 {
@@ -73,6 +73,10 @@ section article h3 {
   font-weight: 600;
   color: maroon;
   margin-bottom: 20px;
+}
+
+p, ul {
+  font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
 }
 
 section article p {
@@ -135,11 +139,16 @@ main div ul img {
 #locations ul {
   display: flex;
   justify-content: space-between;
+  background-color: #ddd;
+  color: teal;
+  padding-right: 10px;
+  padding-left: 10px;
+  font-weight: 400;
 }
 
 
 footer {
-  height: 125px;
+  height: 85px;
   background-color: teal;
   margin-top: 30px;
 }
@@ -150,5 +159,21 @@ footer ul {
   padding-left: 10px;
   padding-top: 10px;
   
+}
+
+table {
+  background-color: #ddd;
+  color: teal;
+  font-weight: 400;
+}
+
+table, th, td {
+  border: 1px solid;
+}
+
+table thead {
+  font-family: 'DM Sans', sans-serif;
+  color: maroon;
+  font-weight: 600;
 }
 
