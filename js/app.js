@@ -4,6 +4,7 @@ let salesSection = document.getElementById('store-sales-data');
 let salesTable = document.querySelector('table');
 
 //constructor below
+let salesDataArr = [];
 
 function Store(location, minCust, maxCust, aveCookieSale){
   this.location = location;
@@ -13,14 +14,13 @@ function Store(location, minCust, maxCust, aveCookieSale){
   this.openingHour = 6;
   this.closingHour = 19;
   this.salesData = 0;
+
+  salesDataArr.push(this.salesCount());
 }
-
-
+console.log(salesDataArr);
 Store.prototype.customerCalc = function(){
   return Math.floor(Math.random() * (this.maxCust - this.minCust + 1) + this.minCust);
 }
-
-
 
 Store.prototype.salesCount = function(){
   let arr = [];
@@ -42,6 +42,28 @@ Store.prototype.salesCount = function(){
     totObj['Total'] = total;
     arr.push(totObj);
     return arr;
+}
+
+Store.prototype.render = function(){
+    
+  let tBodyElem = document.createElement('tbody');
+  salesTable.appendChild(tBodyElem);
+
+  let tRowElem = document.createElement('tr');
+  tBodyElem.appendChild(tRowElem);
+  
+  let tHElem = document.createElement('th');
+  tHElem.textContent = `${this.location}`;
+  tRowElem.appendChild(tHElem);
+ 
+  for(let i = 0; i < this.salesData.length; i++){
+    let innerObj = this.salesData[i];
+    for(let key in innerObj) {
+      let tDElem = document.createElement('td');
+      tDElem.textContent = `${innerObj[key]}`;
+      tRowElem.appendChild(tDElem);
+     }
+  }
 }
 
 function renderHeader(){
@@ -76,87 +98,40 @@ function renderHeader(){
     
 }
 
-// function renderFooter(){
-//   let tFootElem = document.createElement('tfoot');
-//   salesTable.appendChild(tFootElem);
-  
-//   let tFRowElem = document.createElement('tr');
-//   tFootElem.appendChild(tFRowElem);
-
-//   let tFElem = document.createElement('td');
-//   tFElem.textContent = "Totals";
-//   tFRowElem.appendChild(tFElem);
-//  /////above this probably makes sense
-//   let 
-//   for(let i = openingHour; i <= closingHour; i++){
-//       let tHElem = document.createElement('th');
-//       if(i < 12) {
-//         tHElem.textContent = `${i}:00am`;;
-//       } else if(i === 12){
-//         tHElem.textContent = `${i}:00pm`;
-//       }else  {
-//         tHElem.textContent = `${i-12}:00pm`;
-//       } 
-      
-//       tHRowElem.appendChild(tHElem);
-//     }
-//     let tHElemX = document.createElement('th');
-//     tHElemX.textContent = "Daily Location Total";
-//     tHRowElem.appendChild(tHElemX);
+function renderFooter(){
+    let tFootElem = document.createElement('tfoot');
+    salesTable.appendChild(tFootElem);
     
-// }
-
-
-////////////array model below from lecture 07
-
-// THIS - refer to the whole object that gets created
-let students = [];
-
-function Student(fullName, pronouns){
-  this.fullName = fullName;
-  this.pronouns = pronouns;
-  this.course = '201d88';
-  this.interests = [];
-  students.push(this);
-}
-
-// // PROTOTYPES - inherits
-// Student.prototype.greeting = function(){
-//   console.log(`Hey ${this.course}, this is ${this.fullName}!!`);
-// }
-
-
-// new Student('Liliane Lendvai', 'she/her');
-// new Student('Dan Awesome', 'he/him');
-// new Student('Tim Traylor', 'he/him');
-
-// students[0].interests.push('reading');
-
-
-// console.log(students)
-
-/////////////////
-Store.prototype.render = function(){
-    
-  let tBodyElem = document.createElement('tbody');
-  salesTable.appendChild(tBodyElem);
-
-  let tRowElem = document.createElement('tr');
-  tBodyElem.appendChild(tRowElem);
+    let tRowElem = document.createElement('tr');
+    tFootElem.appendChild(tRowElem);
   
-  let tHElem = document.createElement('th');
-  tHElem.textContent = `${this.location}`;
-  tRowElem.appendChild(tHElem);
- 
-  for(let i = 0; i < this.salesData.length; i++){
-    let innerObj = this.salesData[i];
-    for(let key in innerObj) {
+    let tHElem = document.createElement('th');//see if left as td would have mattered
+    tHElem.textContent = "Totals";
+    tRowElem.appendChild(tHElem);
+   
+    let grandTotal = 0;
+
+    console.log(salesDataArr);
+
+    for(let i = 0; i < salesDataArr.length; i++){
+      let total = 0; 
+      for(let j = 0; j <salesDataArr[i].length; j++){
+        let innerObj = salesDataArr[j][i];
+        for(let key in innerObj){
+          total += innerObj[key];
+          grandTotal += innerObj[key];
+        }
+      }
       let tDElem = document.createElement('td');
-      tDElem.textContent = `${innerObj[key]}`;
+      tDElem.textContent = total;
       tRowElem.appendChild(tDElem);
-     }
-  }
+    }
+    
+    let tDElem = document.createElement('td');
+    tDElem.textContent = grandTotal;
+    tRowElem.appendChild(tDElem);
 }
+  
 
 let seattle = new Store('Seattle', 23, 65, 6.3);
 seattle.salesData = seattle.salesCount();
@@ -179,7 +154,43 @@ let lima = new Store('Lima', 2, 16, 4.6);
 lima.salesData = lima.salesCount();
 lima.render();
 
+console.log(salesDataArr);
 renderHeader();
+renderFooter();
+
+
+
+
+////////////array model below from lecture 07
+
+// THIS - refer to the whole object that gets created
+// let students = [];
+
+// function Student(fullName, pronouns){
+//   this.fullName = fullName;
+//   this.pronouns = pronouns;
+//   this.course = '201d88';
+//   this.interests = [];
+//   students.push(this);
+// }
+
+// // PROTOTYPES - inherits
+// Student.prototype.greeting = function(){
+//   console.log(`Hey ${this.course}, this is ${this.fullName}!!`);
+// }
+
+
+// new Student('Liliane Lendvai', 'she/her');
+// new Student('Dan Awesome', 'he/him');
+// ne                     w Student('Tim Traylor', 'he/him');
+
+// students[0].interests.push('reading');
+
+
+// console.log(students)
+
+/////////////////
+
 
 // ////object literals below
 // let seattle = {
