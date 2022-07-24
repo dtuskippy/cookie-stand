@@ -3,8 +3,9 @@
 let salesSection = document.getElementById('store-sales-data');
 let salesTable = document.querySelector('table');
 
-//constructor below
+
 let salesDataArr = [];
+let storesArr = [];
 
 function Store(location, minCust, maxCust, aveCookieSale){
   this.location = location;
@@ -16,8 +17,9 @@ function Store(location, minCust, maxCust, aveCookieSale){
   this.salesData = 0;
 
   salesDataArr.push(this.salesCount());
+  storesArr.push(this);
 }
-console.log(salesDataArr);
+
 Store.prototype.customerCalc = function(){
   return Math.floor(Math.random() * (this.maxCust - this.minCust + 1) + this.minCust);
 }
@@ -105,21 +107,17 @@ function renderFooter(){
     let tRowElem = document.createElement('tr');
     tFootElem.appendChild(tRowElem);
   
-    let tHElem = document.createElement('th');//see if left as td would have mattered
+    let tHElem = document.createElement('th');
     tHElem.textContent = "Totals";
     tRowElem.appendChild(tHElem);
    
-    let grandTotal = 0;
-
-    console.log(salesDataArr);
-
-    for(let i = 0; i < salesDataArr.length; i++){
+    for(let i = 0; i < 15; i++){
       let total = 0; 
-      for(let j = 0; j <salesDataArr[i].length; j++){
+      for(let j = 0; j <salesDataArr.length; j++){
         let innerObj = salesDataArr[j][i];
+        // console.log('innerObj', innerObj);
         for(let key in innerObj){
           total += innerObj[key];
-          grandTotal += innerObj[key];
         }
       }
       let tDElem = document.createElement('td');
@@ -127,126 +125,44 @@ function renderFooter(){
       tRowElem.appendChild(tDElem);
     }
     
-    let tDElem = document.createElement('td');
-    tDElem.textContent = grandTotal;
-    tRowElem.appendChild(tDElem);
 }
-  
+
+let storeForm = document.getElementById('store-form');
+
+function handleSubmit(event) {
+  event.preventDefault();
+  let location = event.target.location.value;
+  let minCust = event.target.minCust.value;
+  let maxCust = event.target.maxCust.value;
+  let aveCookieSale = event.target.aveCookieSale.value;
+  let newStore = new Store(location, minCust, maxCust, aveCookieSale);
+  salesTable.deleteTFoot();
+  storesArr[storesArr.length-1].salesData = salesDataArr[salesDataArr.length-1];
+  storesArr[storesArr.length-1].render();
+  renderFooter();
+  document.getElementById('store-form').reset();
+
+}
+
+storeForm.addEventListener('submit', handleSubmit);
+
 
 let seattle = new Store('Seattle', 23, 65, 6.3);
-seattle.salesData = seattle.salesCount();
-seattle.render();
-console.log(seattle.salesData);
-
 let tokyo = new Store('Tokyo', 3, 24, 1.2);
-tokyo.salesData = tokyo.salesCount();
-tokyo.render();
-
 let dubai = new Store('Dubai', 11, 38, 3.7);
-dubai.salesData = dubai.salesCount();
-dubai.render();
-
 let paris = new Store('Paris', 20, 38, 2.3);
-paris.salesData = paris.salesCount();
-paris.render();
-
 let lima = new Store('Lima', 2, 16, 4.6);
-lima.salesData = lima.salesCount();
-lima.render();
 
-console.log(salesDataArr);
+for(let i = 0; i < storesArr.length; i++) {
+  storesArr[i].salesData = salesDataArr[i];
+  storesArr[i].render();
+}
+
 renderHeader();
 renderFooter();
 
 
 
 
-////////////array model below from lecture 07
-
-// THIS - refer to the whole object that gets created
-// let students = [];
-
-// function Student(fullName, pronouns){
-//   this.fullName = fullName;
-//   this.pronouns = pronouns;
-//   this.course = '201d88';
-//   this.interests = [];
-//   students.push(this);
-// }
-
-// // PROTOTYPES - inherits
-// Student.prototype.greeting = function(){
-//   console.log(`Hey ${this.course}, this is ${this.fullName}!!`);
-// }
 
 
-// new Student('Liliane Lendvai', 'she/her');
-// new Student('Dan Awesome', 'he/him');
-// ne                     w Student('Tim Traylor', 'he/him');
-
-// students[0].interests.push('reading');
-
-
-// console.log(students)
-
-/////////////////
-
-
-// ////object literals below
-// let seattle = {
-//   location: 'Seattle',
-//   minCust: 23, 
-//   maxCust: 65, 
-//   aveCookieSal: 6.3, 
-//   openingHour: 6,
-//   closingHour: 19,
-//   salesData: 0,
-//   customerCalc: function(){
-//     return Math.floor(Math.random() * (this.maxCust - this.minCust + 1) + this.minCust);
-//   },
-//   salesCount: function(){
-//     let arr = [];  
-//     for(let i = this.openingHour; i <= this.closingHour; i++) {
-//         let obj = {};
-//         let salesCalc = Math.floor(this.customerCalc() * this.aveCookieSal);
-//       if(i < 12) {
-//         obj[i + "am"] = salesCalc;
-//       } else if(i === 12){
-//         obj[i + "pm"] = salesCalc;
-//       }else {
-//         obj[i - 12 + "pm"] = salesCalc;
-//       }
-//         arr.push(obj);
-      
-//         }
-//     return arr;
-//   },
-//   render: function(){
-//     let articleElem = document.createElement('article');
-//     salesSection.appendChild(articleElem);
-        
-//     let h2Elem = document.createElement('h2');
-//     h2Elem.textContent = this.location;
-//     articleElem.appendChild(h2Elem);
-
-//     let ulElem = document.createElement('ul');
-//     articleElem.appendChild(ulElem);
-
-//     for(let i = 0; i < this.salesData.length; i++){
-//       let innerObj = this.salesData[i];
-//       for(let key in innerObj) {
-//         let liElem = document.createElement('li');
-//         liElem.textContent = `${key}: ${innerObj[key]}`;
-//         ulElem.appendChild(liElem);
-//       }
-      
-//     }
-
-    
-//   }
-  
-// }
-
-// seattle.salesData = seattle.salesCount();
-// seattle.render();
-// console.log(seattle.salesData);
