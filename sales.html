@@ -26,6 +26,29 @@
     <a href="index.html">Index</a>
     <h2>Sales Data by Store</h2>
   <section id="store-sales-data"></section> 
+
+ <form id="store-form">
+  <fieldset>
+    <legend>New Store</legend>
+      <label for="location">City:</label>
+      <input id="location" type="text" name="location" placeholder="e.g. Pittsburgh" required>
+
+      <label for="minCust">Minimum Customers:</label>
+      <input id="minCust" type="number" name="minCust" placeholder="e.g. 10" required>
+
+      <label for="maxCust">Maximum Customers:</label>
+      <input id="maxCust" type="number" name="maxCust" placeholder="e.g. 30" required>
+
+      <label for="aveCookieSale">Average Cookies Sold</label>
+      <input id="aveCookieSale" type="number" name="aveCookieSale" placeholder="e.g. 15" required>
+      
+
+      <button type="submit">Add City</button>
+
+  </fieldset>
+
+ </form>
+
  <table></table>
 
 
@@ -34,6 +57,12 @@
 
 
   </main>
+  <footer>
+    <ul>
+      <li>Contact us: info@salmomcookies.com</li>
+      <li>&#169 Alan Chelko</li>
+    </ul>
+  </footer>
   
 </body>
 <script src="js/app.js"></script>

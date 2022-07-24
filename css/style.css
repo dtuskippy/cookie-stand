@@ -165,16 +165,54 @@ table {
   background-color: #ddd;
   color: teal;
   font-weight: 400;
-  padding: 8px;
+  margin-top: 60px;
+  margin-bottom: 250px;
 }
 
-table, th, td {
+th, td {
   border: 1px solid;
+  padding: 5px;
 }
 
 table thead {
   font-family: 'DM Sans', sans-serif;
   color: maroon;
   font-weight: 600;
+}
+
+fieldset {
+  display: flex;
+  flex-direction: column;
+  background-color: rgb(20,204,204);
+  width: 300px;
+  margin-left: 50px;
+  margin-top: 50px;
+  border: 1px solid red;
+  padding: 15px;
+  color: #331300;
+  font-weight: 600;
+ }
+ 
+
+legend {
+  background-color: #331300;
+  color: whitesmoke;
+  width: 150px;
+  align-items: center;
+  padding: 10px;
+  font-size: 22px;
+  text-align: center;
+}
+
+input {
+  margin: 5px;
+}
+
+button {
+  width: 100px;
+  text-align: center;
+  align-self: center;
+  background-color: #331300;
+  color: whitesmoke;
 }
 
