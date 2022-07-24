@@ -132,9 +132,9 @@ let storeForm = document.getElementById('store-form');
 function handleSubmit(event) {
   event.preventDefault();
   let location = event.target.location.value;
-  let minCust = event.target.minCust.value;
-  let maxCust = event.target.maxCust.value;
-  let aveCookieSale = event.target.aveCookieSale.value;
+  let minCust = +event.target.minCust.value;
+  let maxCust = +event.target.maxCust.value;
+  let aveCookieSale = +event.target.aveCookieSale.value;
   let newStore = new Store(location, minCust, maxCust, aveCookieSale);
   salesTable.deleteTFoot();
   storesArr[storesArr.length-1].salesData = salesDataArr[salesDataArr.length-1];
